@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
-import { getSessionsForDate } from "../utils/workoutStorage";
+// import { getSessionsForDate } from "../utils/workoutStorage";
 import DayWorkout from "./DayWorkout";
 import ProgressSummary from "./ProgressSummary";
 import BackupControls from "./BackupControls";
-import { getCompletedDayIdsForDate } from "../utils/workoutStorage";
+import { getCompletedDayIdsForDateV2 } from "../utils/workoutStorage";
+
 
 export default function TrackerDashboard({ plan }) {
   const months = plan.months;
@@ -12,7 +13,8 @@ export default function TrackerDashboard({ plan }) {
   const [openDayId, setOpenDayId] = useState(null);
 
   const todayISO = new Date().toISOString().slice(0, 10);
-  const completedDayIdsToday = getCompletedDayIdsForDate(todayISO);
+  const completedDayIdsToday = getCompletedDayIdsForDateV2(todayISO);
+
 
 
   const currentMonthBase = useMemo(

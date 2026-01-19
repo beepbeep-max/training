@@ -1,7 +1,7 @@
-import { getSessions } from "../utils/workoutStorage";
+import { getSessionsV2 } from "../utils/workoutStorage";
 
 export default function ProgressSummary({ currentMonth }) {
-  const sessions = getSessions();
+  const sessions = getSessionsV2();
   const totalSessions = sessions.length;
 
   const sorted = [...sessions].sort((a, b) => new Date(a.date) - new Date(b.date));

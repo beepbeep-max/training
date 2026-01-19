@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { saveWorkoutLog, getLastExerciseSessionSummary} from "../utils/workoutStorage";
+import { saveWorkoutLog, getLastExerciseSessionSummary, saveSession } from "../utils/workoutStorage";
 
 export default function DayWorkout({ monthData, dayId, onClose }) {
   const day = monthData.days.find(d => d.id === dayId);
@@ -21,6 +21,13 @@ export default function DayWorkout({ monthData, dayId, onClose }) {
 
   function completeWorkout() {
     const timestamp = new Date().toISOString();
+    
+    saveSession({
+      date: timestamp,
+      month: monthData.month,
+      phase: monthData.phase.name,
+      day: day.id
+    }); 
 
     Object.entries(log).forEach(([exerciseId, sets]) => {
       Object.entries(sets).forEach(([setIndex, data]) => {

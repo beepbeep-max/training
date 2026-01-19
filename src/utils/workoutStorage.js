@@ -87,3 +87,22 @@ export function getLastExerciseSessionSummary(exerciseId) {
     rpe: best.rpe ?? null
   };
 }
+const SESSIONS_KEY = "osteostrength12_sessions";
+
+export function saveSession(session) {
+  const existing = JSON.parse(localStorage.getItem(SESSIONS_KEY)) || [];
+  existing.push(session);
+  localStorage.setItem(SESSIONS_KEY, JSON.stringify(existing));
+}
+
+export function getSessionsV2() {
+  return JSON.parse(localStorage.getItem(SESSIONS_KEY)) || [];
+}
+
+export function getSessionsForDateV2(dateISO) {
+  return getSessionsV2().filter(s => (s.date || "").startsWith(dateISO));
+}
+
+export function getCompletedDayIdsForDateV2(dateISO) {
+  return new Set(getSessionsForDateV2(dateISO).map(s => s.day));
+}
