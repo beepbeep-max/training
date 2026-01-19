@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "sessionsPerWeek": 3,
+    "restRuleHours": 48,
+    "rpeScale": "1–10",
+    "notes": "Never train to failure. RPE 6–8 only."
+  },
+  "months": [
+    {
+      "month": 5,
+      "phase": {
+        "name": "Re-Sensitization",
+        "focus": "Focus on single-leg control and reintroducing novelty.",
+        "targetRPE": "7–8",
+        "repGuidance": "6–8"
+      },
+      "days": [
+        {
+          "id": "day1",
+          "title": "Lower Body & Spine",
+          "intent": "Axial loading for spine and hip bone density.",
+          "estimatedTime": "30–35 min",
+          "exercises": [
+            {
+              "id": "heel_drops",
+              "name": "Heel Drops",
+              "sets": 3,
+              "reps": "10–15",
+              "why": "Lift heels, drop firmly. Impact vibration builds bone."
+            },
+            {
+              "id": "front_plank",
+              "name": "Front Plank",
+              "sets": 2,
+              "reps": "30–45s",
+              "why": "Tight core. Natural corset for spine."
+            }
+          ]
+        },
+        {
+          "id": "day2",
+          "title": "Upper Body & Impact",
+          "intent": "Strength and controlled impact absorption.",
+          "estimatedTime": "30 min",
+          "exercises": [
+            {
+              "id": "split_squat",
+              "name": "Split Squat",
+              "sets": 3,
+              "reps": "6–8 / leg",
+              "why": "Single-leg loading improves balance and hip bone density."
+            }
+          ]
+        },
+        {
+          "id": "day3",
+          "title": "Posterior & Lateral",
+          "intent": "Hip strength, balance, and fall prevention.",
+          "estimatedTime": "35 min",
+          "exercises": [
+            {
+              "id": "side_lunge",
+              "name": "Side Lunge",
+              "sets": 2,
+              "reps": "6–8 / side",
+              "why": "Lateral loading strengthens femoral neck from a new angle."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
