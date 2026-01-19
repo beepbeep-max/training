@@ -49,3 +49,30 @@ export function getSessionsForDate(dateISO) {
   const sessions = getSessions();
   return sessions.filter(s => (s.date || "").startsWith(dateISO));
 }
+
+export function getLastExerciseSessionSummary(exerciseId) {
+  const logs = getWorkoutLogs()
+    .filter(l => l.exerciseId === exerciseId)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  if (!logs.length) return null;
+
+  // Most recent session timestamp (ISO string)
+  const latestDate = logs[0].date;
+
+  // Get all sets for that same session
+  const sameSession = logs.filter(l => l.date === latestDate);
+
+  // Choose the highest set number that has data (best proxy for "final set")
+  const best = sameSession
+    .filter(l => l.weight != null || l.rpe != null)
+    .sort((a, b) => (b.set ?? 0) - (a.set ?? 0))[0];
+
+  if (!best) return null;
+
+  return {
+    date: latestDate,
+    weight: best.weight ?? null,
+    rpe: best.rpe ?? null
+  };
+}
