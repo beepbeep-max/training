@@ -43,3 +43,9 @@ export function getSessions() {
 
   return Object.values(sessions);
 }
+
+export function getSessionsForDate(dateISO) {
+  // dateISO should be "YYYY-MM-DD"
+  const sessions = getSessions();
+  return sessions.filter(s => (s.date || "").startsWith(dateISO));
+}

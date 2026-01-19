@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { getSessionsForDate } from "../utils/workoutStorage";
 import DayWorkout from "./DayWorkout";
 import ProgressSummary from "./ProgressSummary";
 import BackupControls from "./BackupControls";
@@ -8,6 +9,12 @@ export default function TrackerDashboard({ plan }) {
 
   const [selectedMonth, setSelectedMonth] = useState(months[0]?.month ?? 1);
   const [openDayId, setOpenDayId] = useState(null);
+
+  const todayISO = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+  const todaysSessions = getSessionsForDate(todayISO);
+
+  const completedDayIdsToday = new Set(todaysSessions.map(s => s.day));
+
 
   const currentMonthBase = useMemo(
   () => months.find(m => m.month === Number(selectedMonth)) ?? months[0],
@@ -65,6 +72,41 @@ const currentMonthData = useMemo(() => {
       <ProgressSummary currentMonth={currentMonthData} />
 
       {/* Day cards */}
+      {currentMonthData.days.map(day => {
+        const isDoneToday = completedDayIdsToday.has(day.id);
+
+        return (
+         <button
+          key={day.id}
+          onClick={() => setOpenDayId(day.id)}
+          className={`text-left border rounded p-4 bg-white hover:shadow-sm transition ${
+            isDoneToday ? "border-emerald-300 bg-emerald-50" : ""
+      }`}
+      >
+          <div className="flex items-center justify-between">
+            <div className="text-lg font-semibold">
+              {day.id.toUpperCase().replace("DAY", "Day ")}
+            </div>
+
+            {isDoneToday ? (
+              <span className="text-xs font-semibold px-2 py-1 rounded bg-emerald-600 text-white">
+                Completed today ✓
+              </span>
+        ) : (
+          <div className="text-gray-400 text-xl">›</div>
+        )}
+      </div>
+
+      <div className="font-medium mt-1">{day.title}</div>
+      <div className="text-sm text-gray-600 mt-1">{day.intent}</div>
+
+      <div className="text-xs text-gray-500 mt-3">
+        {day.estimatedTime} • {day.exercises.length} exercises
+      </div>
+    </button>
+  );
+})}
+
       <div>
         <h3 className="font-medium mb-3">This Week’s Training</h3>
 
@@ -110,11 +152,10 @@ const currentMonthData = useMemo(() => {
                 onClick={() => setOpenDayId(null)}
                 className="text-gray-500 hover:text-gray-800"
                 aria-label="Close"
-              >
-                ✕
-              </button>
-            </div>
-
+                >
+                  ✕
+                </button>
+              </div>
             <DayWorkout
               monthData={currentMonthData}
               dayId={openDayId}
