@@ -22,6 +22,17 @@ export function getLastExerciseLog(exerciseId) {
   return logs.length ? logs[0] : null;
 }
 
+export function getCompletedDayIdsForDate(dateISO) {
+  const logs = getWorkoutLogs().filter(l => (l.date || "").startsWith(dateISO));
+  const completed = new Set();
+
+  logs.forEach(l => {
+    if (l.done === true) completed.add(l.day);
+  });
+
+  return completed;
+}
+
 /**
  * Sessions are unique by (date + day). We store per-set logs, so this groups them.
  */

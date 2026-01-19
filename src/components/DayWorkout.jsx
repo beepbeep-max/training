@@ -32,7 +32,8 @@ export default function DayWorkout({ monthData, dayId, onClose }) {
           exerciseId,
           set: Number(setIndex) + 1,
           weight: data.weight || null,
-          rpe: data.rpe || null
+          rpe: data.rpe || null,
+          done: data.done ?? false
         });
       });
     });
@@ -109,7 +110,10 @@ export default function DayWorkout({ monthData, dayId, onClose }) {
                 onChange={e => updateSet(ex.id, i, "rpe", e.target.value)}
               />      
 
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                onChange={e => updateSet(ex.id, i, "done", e.target.checked)}
+              />
             </div>
           ))}
         </div>

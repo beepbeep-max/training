@@ -3,6 +3,7 @@ import { getSessionsForDate } from "../utils/workoutStorage";
 import DayWorkout from "./DayWorkout";
 import ProgressSummary from "./ProgressSummary";
 import BackupControls from "./BackupControls";
+import { getCompletedDayIdsForDate } from "../utils/workoutStorage";
 
 export default function TrackerDashboard({ plan }) {
   const months = plan.months;
@@ -10,10 +11,8 @@ export default function TrackerDashboard({ plan }) {
   const [selectedMonth, setSelectedMonth] = useState(months[0]?.month ?? 1);
   const [openDayId, setOpenDayId] = useState(null);
 
-  const todayISO = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
-  const todaysSessions = getSessionsForDate(todayISO);
-
-  const completedDayIdsToday = new Set(todaysSessions.map(s => s.day));
+  const todayISO = new Date().toISOString().slice(0, 10);
+  const completedDayIdsToday = getCompletedDayIdsForDate(todayISO);
 
 
   const currentMonthBase = useMemo(
