@@ -9,10 +9,18 @@ export default function TrackerDashboard({ plan }) {
   const [selectedMonth, setSelectedMonth] = useState(months[0]?.month ?? 1);
   const [openDayId, setOpenDayId] = useState(null);
 
-  const currentMonthData = useMemo(
-    () => months.find(m => m.month === Number(selectedMonth)) ?? months[0],
-    [months, selectedMonth]
-  );
+  const currentMonthBase = useMemo(
+  () => months.find(m => m.month === Number(selectedMonth)) ?? months[0],
+  [months, selectedMonth]
+);
+
+const currentMonthData = useMemo(() => {
+  return {
+    ...currentMonthBase,
+    days: currentMonthBase.days ?? plan.daysTemplate
+  };
+}, [currentMonthBase, plan.daysTemplate]);
+
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
